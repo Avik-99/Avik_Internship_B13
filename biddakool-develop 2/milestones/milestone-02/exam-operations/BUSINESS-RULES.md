@@ -1,0 +1,21 @@
+# Exam Admit Cards & Seat Plans — Business Rules
+
+**Module:** `exam-operations`  |  **Requirement namespace:** `M2-EXAM_OPERATIONS`  |  **Milestone:** 2  |  **Status:** Proposed baseline for implementation
+
+## Module-specific rules
+
+1. M2-EXAM_OPERATIONS-BR-001: Seat assignment is unique per room/session; candidate cannot have overlapping sittings.
+2. M2-EXAM_OPERATIONS-BR-002: Reissues remain traceable without altering the canonical examination entry.
+
+## Mandatory shared rules
+
+- A user operation must match authenticated membership, institution, and a named action permission.
+- IDs are immutable; timestamps and changes are audited for privileged or material operations.
+- Race conditions and duplicate requests must be handled at database/transaction boundaries.
+- Mutating commands return a predictable validation or conflict error instead of silently overwriting another actor.
+- Sensitive exports use expiring authorized access or streamed responses; never expose public object storage URLs.
+- Configuration changes affecting historical records require effective dates or policy versions.
+
+## Decisions requiring confirmation
+
+The PDF provides examples and screenshots, but does not define all legal/academic rules. Obtain explicit approval for numeric limits, rounding, thresholds, retention periods and exceptional overrides.

@@ -1,0 +1,340 @@
+openapi: 3.1.0
+info:
+  title: Biddakool Attendance — first operation
+  version: 0.1.0
+  description: Proposed API-side contract for producer and consumer review. A browser
+    BFF can call this API on behalf of a user with an authorized institution context.
+paths:
+  /api/v1/attendance/sessions/{sessionId}/finalize:
+    post:
+      operationId: finalizeAttendanceSession
+      summary: Finalize the roster for one attendance session
+      description: Authorize active membership and assignment on every attempt. A
+        matching authorized retry replays the committed data before checking expectedVersion.
+        The correlation ID identifies the current HTTP attempt.
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: sessionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Idempotency-Key
+        in: header
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: One UUID per logical finalization action. Reuse the original
+          key on retry.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FinalizeRequest'
+            example:
+              expectedVersion: 3
+      responses:
+        '200':
+          description: Committed result or equivalent authorized replay.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FinalizeResponse'
+              example:
+                data:
+                  id: df257b2b-d6c0-4104-ab1b-64ab471bf118
+                  status: finalized
+                  version: 4
+                meta:
+                  correlationId: request-02
+        '400':
+          description: Malformed input or missing or invalid idempotency key.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem400'
+        '401':
+          description: Authentication required.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem401'
+          headers:
+            WWW-Authenticate:
+              schema:
+                type: string
+              description: Bearer challenge.
+        '403':
+          description: Membership revoked or permission denied.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem403'
+        '404':
+          description: Session missing or outside the active tenant.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem404'
+        '409':
+          description: Concurrent modification, conflicting state or reuse of a key
+            with a different request.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem409'
+        '422':
+          description: Roster fails finalization rules.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem422'
+        '429':
+          description: Rate limit exceeded.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem429'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    FinalizeRequest:
+      type: object
+      required:
+      - expectedVersion
+      properties:
+        expectedVersion:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 2147483647
+      additionalProperties: false
+    FinalizedSession:
+      type: object
+      required:
+      - id
+      - status
+      - version
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - finalized
+        version:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 2147483647
+      additionalProperties: false
+    FinalizeResponse:
+      type: object
+      required:
+      - data
+      - meta
+      properties:
+        data:
+          $ref: '#/components/schemas/FinalizedSession'
+        meta:
+          type: object
+          required:
+          - correlationId
+          properties:
+            correlationId:
+              type: string
+              minLength: 1
+          additionalProperties: false
+      additionalProperties: false
+    Problem400:
+      type: object
+      required:
+      - type
+      - title
+      - status
+      - code
+      - correlationId
+      properties:
+        type:
+          type: string
+          format: uri-reference
+        title:
+          type: string
+          minLength: 1
+        status:
+          type: integer
+          enum:
+          - 400
+        code:
+          type: string
+          enum:
+          - invalid_request
+        correlationId:
+          type: string
+          minLength: 1
+    Problem401:
+      type: object
+      required:
+      - type
+      - title
+      - status
+      - code
+      - correlationId
+      properties:
+        type:
+          type: string
+          format: uri-reference
+        title:
+          type: string
+          minLength: 1
+        status:
+          type: integer
+          enum:
+          - 401
+        code:
+          type: string
+          enum:
+          - unauthenticated
+        correlationId:
+          type: string
+          minLength: 1
+    Problem403:
+      type: object
+      required:
+      - type
+      - title
+      - status
+      - code
+      - correlationId
+      properties:
+        type:
+          type: string
+          format: uri-reference
+        title:
+          type: string
+          minLength: 1
+        status:
+          type: integer
+          enum:
+          - 403
+        code:
+          type: string
+          enum:
+          - forbidden
+        correlationId:
+          type: string
+          minLength: 1
+    Problem404:
+      type: object
+      required:
+      - type
+      - title
+      - status
+      - code
+      - correlationId
+      properties:
+        type:
+          type: string
+          format: uri-reference
+        title:
+          type: string
+          minLength: 1
+        status:
+          type: integer
+          enum:
+          - 404
+        code:
+          type: string
+          enum:
+          - session_not_found
+        correlationId:
+          type: string
+          minLength: 1
+    Problem409:
+      type: object
+      required:
+      - type
+      - title
+      - status
+      - code
+      - correlationId
+      properties:
+        type:
+          type: string
+          format: uri-reference
+        title:
+          type: string
+          minLength: 1
+        status:
+          type: integer
+          enum:
+          - 409
+        code:
+          type: string
+          enum:
+          - version_conflict
+          - state_conflict
+          - idempotency_key_conflict
+        correlationId:
+          type: string
+          minLength: 1
+    Problem422:
+      type: object
+      required:
+      - type
+      - title
+      - status
+      - code
+      - correlationId
+      properties:
+        type:
+          type: string
+          format: uri-reference
+        title:
+          type: string
+          minLength: 1
+        status:
+          type: integer
+          enum:
+          - 422
+        code:
+          type: string
+          enum:
+          - invalid_roster
+        correlationId:
+          type: string
+          minLength: 1
+    Problem429:
+      type: object
+      required:
+      - type
+      - title
+      - status
+      - code
+      - correlationId
+      properties:
+        type:
+          type: string
+          format: uri-reference
+        title:
+          type: string
+          minLength: 1
+        status:
+          type: integer
+          enum:
+          - 429
+        code:
+          type: string
+          enum:
+          - rate_limited
+        correlationId:
+          type: string
+          minLength: 1

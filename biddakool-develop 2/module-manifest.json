@@ -1,0 +1,428 @@
+[
+  {
+    "module_id": "foundation-identity",
+    "milestone": 1,
+    "title": "Identity & Access Control",
+    "pdf_pages": "9-10, 46",
+    "depends_on": [],
+    "requirements": 6
+  },
+  {
+    "module_id": "tenant-institution",
+    "milestone": 1,
+    "title": "Tenant & Institution Configuration",
+    "pdf_pages": "9-10, 20, 46",
+    "depends_on": [
+      "foundation-identity"
+    ],
+    "requirements": 6
+  },
+  {
+    "module_id": "academic-registry",
+    "milestone": 1,
+    "title": "Academic Registry & Curriculum",
+    "pdf_pages": "9-10, 21, 29-30",
+    "depends_on": [
+      "tenant-institution",
+      "foundation-identity"
+    ],
+    "requirements": 7
+  },
+  {
+    "module_id": "student-lifecycle",
+    "milestone": 1,
+    "title": "Students, Guardians & Enrollment",
+    "pdf_pages": "12, 14, 19-20, 48-50",
+    "depends_on": [
+      "foundation-identity",
+      "tenant-institution",
+      "academic-registry"
+    ],
+    "requirements": 8
+  },
+  {
+    "module_id": "faculty-staff",
+    "milestone": 1,
+    "title": "Faculty, Teacher & Staff Directory",
+    "pdf_pages": "13-15, 18, 52-53",
+    "depends_on": [
+      "foundation-identity",
+      "tenant-institution",
+      "academic-registry"
+    ],
+    "requirements": 6
+  },
+  {
+    "module_id": "scheduling",
+    "milestone": 1,
+    "title": "Class, Teacher & Examination Timetables",
+    "pdf_pages": "28-30",
+    "depends_on": [
+      "academic-registry",
+      "faculty-staff",
+      "student-lifecycle"
+    ],
+    "requirements": 7
+  },
+  {
+    "module_id": "attendance",
+    "milestone": 1,
+    "title": "Student & Staff Attendance",
+    "pdf_pages": "15-18, 49, 52, 55",
+    "depends_on": [
+      "academic-registry",
+      "student-lifecycle",
+      "faculty-staff",
+      "scheduling"
+    ],
+    "requirements": 8
+  },
+  {
+    "module_id": "assessment-results",
+    "milestone": 1,
+    "title": "Examinations, Grades & Results",
+    "pdf_pages": "21-27, 49, 53, 55-57",
+    "depends_on": [
+      "academic-registry",
+      "student-lifecycle",
+      "faculty-staff",
+      "attendance"
+    ],
+    "requirements": 9
+  },
+  {
+    "module_id": "fee-management",
+    "milestone": 1,
+    "title": "Student Fees, Dues & Cash Collection",
+    "pdf_pages": "10, 35-36, 48",
+    "depends_on": [
+      "student-lifecycle",
+      "academic-registry",
+      "foundation-identity"
+    ],
+    "requirements": 8
+  },
+  {
+    "module_id": "notices-events",
+    "milestone": 1,
+    "title": "Notices, Events & Calendar",
+    "pdf_pages": "9-10, 46, 48-50",
+    "depends_on": [
+      "tenant-institution",
+      "academic-registry",
+      "foundation-identity"
+    ],
+    "requirements": 6
+  },
+  {
+    "module_id": "self-service-portals",
+    "milestone": 1,
+    "title": "Student, Guardian, Teacher & Admin Portals",
+    "pdf_pages": "14-18, 48-53",
+    "depends_on": [
+      "foundation-identity",
+      "tenant-institution",
+      "academic-registry",
+      "student-lifecycle",
+      "faculty-staff",
+      "attendance",
+      "assessment-results",
+      "fee-management",
+      "notices-events"
+    ],
+    "requirements": 7
+  },
+  {
+    "module_id": "online-admissions",
+    "milestone": 2,
+    "title": "Online Application & Admission",
+    "pdf_pages": "12",
+    "depends_on": [
+      "tenant-institution",
+      "academic-registry",
+      "student-lifecycle",
+      "fee-management",
+      "exam-operations"
+    ],
+    "requirements": 7
+  },
+  {
+    "module_id": "staff-recruitment",
+    "milestone": 2,
+    "title": "Faculty & Staff Recruitment",
+    "pdf_pages": "13",
+    "depends_on": [
+      "faculty-staff",
+      "fee-management",
+      "tenant-institution"
+    ],
+    "requirements": 6
+  },
+  {
+    "module_id": "leave-workflows",
+    "milestone": 2,
+    "title": "Leave Request & Approvals",
+    "pdf_pages": "19, 53, 55",
+    "depends_on": [
+      "student-lifecycle",
+      "faculty-staff",
+      "attendance"
+    ],
+    "requirements": 6
+  },
+  {
+    "module_id": "device-attendance",
+    "milestone": 2,
+    "title": "Biometric, RFID & Device Attendance",
+    "pdf_pages": "15-18",
+    "depends_on": [
+      "attendance",
+      "faculty-staff",
+      "student-lifecycle"
+    ],
+    "requirements": 7
+  },
+  {
+    "module_id": "advanced-examinations",
+    "milestone": 2,
+    "title": "Advanced Grading, Analysis & Report Cards",
+    "pdf_pages": "22-27, 58-63",
+    "depends_on": [
+      "assessment-results",
+      "academic-registry",
+      "attendance"
+    ],
+    "requirements": 9
+  },
+  {
+    "module_id": "exam-operations",
+    "milestone": 2,
+    "title": "Exam Admit Cards & Seat Plans",
+    "pdf_pages": "28",
+    "depends_on": [
+      "assessment-results",
+      "scheduling",
+      "student-lifecycle"
+    ],
+    "requirements": 6
+  },
+  {
+    "module_id": "online-fee-payments",
+    "milestone": 2,
+    "title": "Online Payments & Reconciliation",
+    "pdf_pages": "35-36, 48",
+    "depends_on": [
+      "fee-management",
+      "foundation-identity",
+      "tenant-institution"
+    ],
+    "requirements": 7
+  },
+  {
+    "module_id": "accounting-ledger",
+    "milestone": 2,
+    "title": "Accounting & General Ledger",
+    "pdf_pages": "35, 37-39",
+    "depends_on": [
+      "tenant-institution",
+      "fee-management"
+    ],
+    "requirements": 7
+  },
+  {
+    "module_id": "staff-payroll",
+    "milestone": 2,
+    "title": "Payroll, Deductions & Provident Fund",
+    "pdf_pages": "15, 43, 53",
+    "depends_on": [
+      "faculty-staff",
+      "attendance",
+      "leave-workflows",
+      "accounting-ledger"
+    ],
+    "requirements": 7
+  },
+  {
+    "module_id": "messaging-sms",
+    "milestone": 2,
+    "title": "In-App Messaging, SMS & Notifications",
+    "pdf_pages": "10, 15, 35, 44",
+    "depends_on": [
+      "foundation-identity",
+      "student-lifecycle",
+      "faculty-staff",
+      "attendance",
+      "fee-management",
+      "assessment-results",
+      "notices-events"
+    ],
+    "requirements": 8
+  },
+  {
+    "module_id": "lesson-plans",
+    "milestone": 2,
+    "title": "Lesson Plans, Diaries & Student Progress",
+    "pdf_pages": "31, 50, 53",
+    "depends_on": [
+      "academic-registry",
+      "scheduling",
+      "student-lifecycle",
+      "faculty-staff"
+    ],
+    "requirements": 6
+  },
+  {
+    "module_id": "certificates",
+    "milestone": 2,
+    "title": "Certificates & Enhanced ID Card Designer",
+    "pdf_pages": "19-20",
+    "depends_on": [
+      "student-lifecycle",
+      "faculty-staff",
+      "tenant-institution"
+    ],
+    "requirements": 6
+  },
+  {
+    "module_id": "feedback-committees",
+    "milestone": 2,
+    "title": "Feedback & Basic Committee Administration",
+    "pdf_pages": "46",
+    "depends_on": [
+      "foundation-identity",
+      "tenant-institution",
+      "student-lifecycle"
+    ],
+    "requirements": 6
+  },
+  {
+    "module_id": "inventory",
+    "milestone": 3,
+    "title": "Inventory & Warehouse Operations",
+    "pdf_pages": "10, 41",
+    "depends_on": [
+      "tenant-institution",
+      "student-lifecycle",
+      "faculty-staff",
+      "accounting-ledger"
+    ],
+    "requirements": 6
+  },
+  {
+    "module_id": "library",
+    "milestone": 3,
+    "title": "Library & Lending",
+    "pdf_pages": "10, 42",
+    "depends_on": [
+      "student-lifecycle",
+      "faculty-staff",
+      "fee-management"
+    ],
+    "requirements": 6
+  },
+  {
+    "module_id": "hostel",
+    "milestone": 3,
+    "title": "Hostel, Housing & Residence Fees",
+    "pdf_pages": "10, 42",
+    "depends_on": [
+      "student-lifecycle",
+      "fee-management",
+      "tenant-institution"
+    ],
+    "requirements": 6
+  },
+  {
+    "module_id": "donations",
+    "milestone": 3,
+    "title": "Donations & Donor Pledges",
+    "pdf_pages": "10, 43",
+    "depends_on": [
+      "accounting-ledger",
+      "messaging-sms",
+      "tenant-institution"
+    ],
+    "requirements": 6
+  },
+  {
+    "module_id": "hifz",
+    "milestone": 3,
+    "title": "Hifz Department & Assessment",
+    "pdf_pages": "10, 45",
+    "depends_on": [
+      "student-lifecycle",
+      "faculty-staff",
+      "assessment-results"
+    ],
+    "requirements": 6
+  },
+  {
+    "module_id": "learning-management",
+    "milestone": 3,
+    "title": "Online Courses, Assignments & Quizzes",
+    "pdf_pages": "32-33, 50",
+    "depends_on": [
+      "academic-registry",
+      "student-lifecycle",
+      "faculty-staff",
+      "assessment-results"
+    ],
+    "requirements": 7
+  },
+  {
+    "module_id": "medical-education",
+    "milestone": 3,
+    "title": "Medical College Academic Operations",
+    "pdf_pages": "54-57",
+    "depends_on": [
+      "academic-registry",
+      "student-lifecycle",
+      "attendance",
+      "assessment-results",
+      "leave-workflows",
+      "messaging-sms",
+      "faculty-staff"
+    ],
+    "requirements": 8
+  },
+  {
+    "module_id": "institutional-governance",
+    "milestone": 3,
+    "title": "Governance, Committees & Audit",
+    "pdf_pages": "9, 46",
+    "depends_on": [
+      "foundation-identity",
+      "feedback-committees",
+      "tenant-institution"
+    ],
+    "requirements": 6
+  },
+  {
+    "module_id": "analytics-insights",
+    "milestone": 3,
+    "title": "Advanced Academic & Operational Analytics",
+    "pdf_pages": "15-18, 24-27, 31, 35-39, 55-57",
+    "depends_on": [
+      "attendance",
+      "assessment-results",
+      "fee-management",
+      "student-lifecycle",
+      "faculty-staff",
+      "accounting-ledger"
+    ],
+    "requirements": 7
+  },
+  {
+    "module_id": "saas-enterprise",
+    "milestone": 3,
+    "title": "SaaS Commercial Operations & Enterprise Extensions",
+    "pdf_pages": "9, 20, 46",
+    "depends_on": [
+      "foundation-identity",
+      "tenant-institution",
+      "accounting-ledger",
+      "analytics-insights"
+    ],
+    "requirements": 8
+  }
+]
